@@ -18,7 +18,7 @@
       >
         <q-carousel-slide v-for="n in 5" :key="n" :name="n">
           <q-img
-            src="src/assets/imagens/evento.png"
+            src="assets/imagens/evento.png"
             style="height: 100%"
             class="full-width"
           >

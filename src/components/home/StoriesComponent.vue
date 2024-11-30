@@ -4,7 +4,7 @@
       <!-- First Story -->
       <div class="row q-col-gutter-xl items-center q-mb-xl">
         <div class="col-12 col-md-6">
-          <q-img src="src/assets/imagens/story-1.png" class="story-image" />
+          <q-img src="assets/imagens/story-1.png" class="story-image" />
         </div>
         <div class="col-12 col-md-6">
           <p class="story-text">
@@ -23,7 +23,7 @@
           </p>
         </div>
         <div class="col-12 col-md-6">
-          <q-img src="src/assets/imagens/story-2.png" class="story-image" />
+          <q-img src="assets/imagens/story-2.png" class="story-image" />
         </div>
         <div class="col-12 col-md-6 lt-md">
           <p class="story-text q-mt-md">

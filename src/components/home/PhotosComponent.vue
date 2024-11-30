@@ -28,7 +28,7 @@
           <div class="row q-col-gutter-md">
             <div v-for="i in 4" :key="i" class="col-12 col-md-3">
               <q-img
-                src="src/assets/imagens/evento.png"
+                src="assets/imagens/evento.png"
                 :ratio="4/3"
                 class="rounded-borders"
               />

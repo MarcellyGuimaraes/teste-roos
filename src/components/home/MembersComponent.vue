@@ -60,27 +60,27 @@ const members = [
     title: "Chair",
     description:
       "Co-Director of the Institute of Global Health Innovation at Imperial College London",
-    image: "src/assets/imagens/membros/membro-1.png",
+    image: "assets/imagens/membros/membro-1.png",
   },
   {
     name: "George Clooney",
     title: "Honorary Co-Chair",
     description:
       "Co-founder, The Sentry; Humanitarian, performer and film maker",
-    image: "src/assets/imagens/membros/membro-2.png",
+    image: "assets/imagens/membros/membro-2.png",
   },
   {
     name: "Leymah Gbowee",
     title: "Member",
     description:
       "Liberian peace activist and women's rights advocate; Nobel Laureate",
-    image: "src/assets/imagens/membros/membro-3.png",
+    image: "assets/imagens/membros/membro-3.png",
   },
   {
     name: "Dele Olojede",
     title: "Member",
     description: "Journalist, Writer, Pulitzer Prize Winner",
-    image: "src/assets/imagens/membros/membro-4.png",
+    image: "assets/imagens/membros/membro-4.png",
   },
 ];
 

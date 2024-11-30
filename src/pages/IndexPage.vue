@@ -45,7 +45,7 @@ const stats = ref([
 const news = ref([
   {
     id: 1,
-    image: "src/assets/imagens/noticias/noticia-1.png",
+    image: "assets/imagens/noticias/noticia-1.png",
     category: "Categoria",
     title: "Lorem ipsum dolor sit amet consectetur",
     description:
@@ -53,7 +53,7 @@ const news = ref([
   },
   {
     id: 2,
-    image: "src/assets/imagens/noticias/noticia-2.png",
+    image: "assets/imagens/noticias/noticia-2.png",
     category: "Categoria",
     title: "Lorem ipsum dolor sit amet consectetur",
     description:
@@ -61,7 +61,7 @@ const news = ref([
   },
   {
     id: 3,
-    image: "src/assets/imagens/noticias/noticia-3.png",
+    image: "assets/imagens/noticias/noticia-3.png",
     category: "Categoria",
     title: "Lorem ipsum dolor sit amet consectetur",
     description:

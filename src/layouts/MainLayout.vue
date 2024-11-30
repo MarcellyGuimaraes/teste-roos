@@ -5,7 +5,7 @@
         <q-tabs class="q-mr-xl">
           <router-link to="/">
             <img
-              src="src/assets/imagens/logo.png"
+              src="assets/imagens/logo.png"
               style="height: 40px"
               alt="OSIDI Logo"
               class="q-mr-md"
@@ -55,7 +55,7 @@
           <div class="col-12 col-md-3">
             <div class="q-mb-lg">
               <img
-                src="src/assets/imagens/logo.png"
+                src="assets/imagens/logo.png"
                 alt="OSIDI"
                 style="height: 40px"
               />

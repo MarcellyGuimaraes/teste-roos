@@ -5,7 +5,7 @@
       <div class="row q-col-gutter-xl">
         <div class="col-12 col-md-6">
           <q-img
-            src="src/assets/imagens/sobre-nos.png"
+            src="assets/imagens/sobre-nos.png"
             spinner-color="primary"
             class="about-image"
           />
