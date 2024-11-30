@@ -54,142 +54,80 @@
 
     <footer class="bg-dark text-white q-py-xl">
       <div class="container">
-        <!-- Main Footer Content -->
-        <div class="row q-col-gutter-xl q-mb-xl">
-          <!-- Logo and Social Links -->
+        <div class="row q-col-gutter-xl">
+          <!-- Logo e Redes Sociais -->
           <div class="col-12 col-md-3">
-            <div class="q-mb-lg">
-              <img
-                src="assets/imagens/logo.png"
-                alt="OSIDI"
-                style="height: 40px"
-              />
-            </div>
-            <div class="row q-gutter-md">
-              <q-btn
-                flat
-                round
-                color="white"
-                icon="fab fa-instagram"
-                href="#"
-                target="_blank"
-              />
-              <q-btn
-                flat
-                round
-                color="white"
-                icon="fab fa-twitter"
-                href="#"
-                target="_blank"
-              />
-              <q-btn
-                flat
-                round
-                color="white"
-                icon="fab fa-linkedin"
-                href="#"
-                target="_blank"
-              />
-              <q-btn
-                flat
-                round
-                color="white"
-                icon="fab fa-youtube"
-                href="#"
-                target="_blank"
-              />
-              <q-btn
-                flat
-                round
-                color="white"
-                icon="fab fa-whatsapp"
-                href="#"
-                target="_blank"
-              />
+            <img
+              src="assets/imagens/logo.png"
+              alt="OSIDI"
+              class="logo q-mb-lg"
+            />
+            <div class="social-links">
+              <a href="#" target="_blank" class="social-link">
+                <q-icon name="mdi-instagram" />
+              </a>
+              <a href="#" target="_blank" class="social-link">
+                <q-icon name="mdi-twitter" />
+              </a>
+              <a href="#" target="_blank" class="social-link">
+                <q-icon name="mdi-linkedin" />
+              </a>
+              <a href="#" target="_blank" class="social-link">
+                <q-icon name="mdi-youtube" />
+              </a>
+              <a href="#" target="_blank" class="social-link">
+                <q-icon name="mdi-whatsapp" />
+              </a>
             </div>
           </div>
 
-          <!-- Navigation Columns -->
-          <div class="col-12 col-sm-6 col-md-3">
-            <h6 class="text-h6 q-mb-md">Mapa do site</h6>
-            <nav>
-              <ul class="list-unstyled">
-                <li class="q-mb-sm">
-                  <router-link to="/" class="text-white">Home</router-link>
-                </li>
-                <li class="q-mb-sm">
-                  <router-link to="/blog" class="text-white">Blog</router-link>
-                </li>
-                <li class="q-mb-sm">
-                  <a href="#" class="text-white">Sobre nós</a>
-                </li>
-                <li class="q-mb-sm">
-                  <a href="#" class="text-white">Fale conosco</a>
-                </li>
-              </ul>
-            </nav>
+          <!-- Mapa do Site -->
+          <div class="col-12 col-md-3">
+            <h6 class="footer-title">Mapa do site</h6>
+            <ul class="footer-links">
+              <li><router-link to="/sobre-nos">Sobre nós</router-link></li>
+              <li>
+                <router-link to="/fale-conosco">Fale conosco</router-link>
+              </li>
+              <li><router-link to="/termos">Termos de uso</router-link></li>
+              <li><router-link to="/privacidade">Privacidade</router-link></li>
+            </ul>
           </div>
 
-          <div class="col-12 col-sm-6 col-md-3">
-            <h6 class="text-h6 q-mb-md">Admin</h6>
-            <nav>
-              <ul class="list-unstyled">
-                <li class="q-mb-sm">
-                  <router-link to="/articles/new" class="text-white"
-                    >Novo Artigo</router-link
-                  >
-                </li>
-                <li class="q-mb-sm">
-                  <router-link to="/categories/new" class="text-white"
-                    >Nova Categoria</router-link
-                  >
-                </li>
-                <li class="q-mb-sm">
-                  <router-link to="/admin/articles" class="text-white"
-                    >Gerenciar Artigos</router-link
-                  >
-                </li>
-                <li class="q-mb-sm">
-                  <router-link to="/admin/categories" class="text-white"
-                    >Gerenciar Categorias</router-link
-                  >
-                </li>
-              </ul>
-            </nav>
+          <!-- Produto -->
+          <div class="col-12 col-md-3">
+            <h6 class="footer-title">Produto</h6>
+            <ul class="footer-links">
+              <li><router-link to="/sobre-nos">Sobre nós</router-link></li>
+              <li>
+                <router-link to="/fale-conosco">Fale conosco</router-link>
+              </li>
+              <li><router-link to="/termos">Termos de uso</router-link></li>
+              <li><router-link to="/privacidade">Privacidade</router-link></li>
+            </ul>
           </div>
 
-          <div class="col-12 col-sm-6 col-md-3">
-            <h6 class="text-h6 q-mb-md">Conhecimento</h6>
-            <nav>
-              <ul class="list-unstyled">
-                <li class="q-mb-sm">
-                  <router-link to="/blog" class="text-white">Blog</router-link>
-                </li>
-                <li class="q-mb-sm">
-                  <a href="#" class="text-white">Central de Ajuda</a>
-                </li>
-              </ul>
-            </nav>
+          <!-- Conhecimento -->
+          <div class="col-12 col-md-3">
+            <h6 class="footer-title">Conhecimento</h6>
+            <ul class="footer-links">
+              <li><router-link to="/blog">Blog</router-link></li>
+              <li><router-link to="/ajuda">Central de Ajuda</router-link></li>
+            </ul>
           </div>
         </div>
 
-        <!-- Copyright Bar -->
-        <div
-          class="row items-center justify-between q-pt-md"
-          style="border-top: 1px solid rgba(255, 255, 255, 0.1)"
-        >
-          <div class="col-12 col-md-auto">
-            <p class="text-grey-5 q-my-none">
-              © 2024 <span class="text-green">OSIDI</span> - Todos os direitos
-              reservados
-            </p>
+        <!-- Copyright -->
+        <div class="copyright-bar">
+          <div>
+            © 2024 <span class="text-primary">OSIDI</span> - Todos os direitos
+            reservados
           </div>
-          <div class="col-12 col-md-auto">
-            <p class="text-grey-5 q-my-none">
-              Desenvolvido em parceria
-              <a href="#" class="text-white">Roos Corporation</a> ft.
-              <a href="#" class="text-white">morais</a>
-            </p>
+          <div class="developers">
+            Desenvolvido em parceria
+            <a href="#" class="developer-link">Roos Corporation</a>
+            ft.
+            <a href="#" class="developer-link">morais°</a>
           </div>
         </div>
       </div>
@@ -275,6 +213,116 @@ a:hover {
 
   .col-12 {
     margin-bottom: 1rem;
+  }
+
+  .col-12:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.bg-dark {
+  background-color: #111;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.logo {
+  height: 40px;
+  margin-bottom: 24px;
+}
+
+.social-links {
+  display: flex;
+  gap: 16px;
+}
+
+.social-link {
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+
+.social-link:hover {
+  opacity: 1;
+}
+
+.footer-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 24px;
+  color: white;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 16px;
+}
+
+.footer-links a {
+  color: #999;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: white;
+}
+
+.copyright-bar {
+  margin-top: 64px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #666;
+  font-size: 14px;
+}
+
+.text-primary {
+  color: #11b80e;
+}
+
+.developers {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.developer-link {
+  color: white;
+  text-decoration: none;
+  transition: opacity 0.3s;
+}
+
+.developer-link:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 767px) {
+  .copyright-bar {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .developers {
+    justify-content: center;
+  }
+
+  .col-12 {
+    margin-bottom: 40px;
   }
 
   .col-12:last-child {
