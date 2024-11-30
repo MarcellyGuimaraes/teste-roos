@@ -19,11 +19,13 @@ module.exports = {
    */
   async getByCategory(req, res) {
     try {
-      const { categoryId } = req.params;
-      const articles = await articlesModel.getByCategory(categoryId);
+      const { categoryCode } = req.params;
+      const articles = await articlesModel.getByCategory(categoryCode);
       res.status(200).json(articles);
     } catch (error) {
-      res.status(500).json({ error: "Erro ao buscar artigos por categoria." });
+      res
+        .status(500)
+        .json({ error: "Erro ao buscar artigos por categoria." + error });
     }
   },
 

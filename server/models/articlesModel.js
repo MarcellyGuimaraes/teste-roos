@@ -13,13 +13,36 @@ module.exports = {
 
   /**
    * Retorna os artigos filtrados por categoria.
-   * @param {string} categoryId - ID da categoria.
+   * @param {string} categoryCode - ID da categoria.
    */
-  async getByCategory(categoryId) {
-    const snapshot = await collection
-      .where("categoryId", "==", categoryId)
+  async getByCategory(categoryCode) {
+    // Primeiro, busca a categoria
+    const categorySnapshot = await db
+      .collection("categories")
+      .where("code", "==", categoryCode)
       .get();
-    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+    if (categorySnapshot.empty) {
+      return []; // ou throw new Error("Categoria não encontrada");
+    }
+
+    const categoryData = {
+      id: categorySnapshot.docs[0].id,
+      ...categorySnapshot.docs[0].data(),
+    };
+
+    // Depois, busca os artigos dessa categoria
+    const articlesSnapshot = await collection
+      .where("category", "==", categoryCode)
+      .get();
+
+    const articles = articlesSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+      categoryDetails: categoryData, // inclui os detalhes da categoria
+    }));
+
+    return articles;
   },
 
   /**

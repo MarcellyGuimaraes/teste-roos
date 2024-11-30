@@ -1,6 +1,8 @@
+// middlewares/articleValidation.js
 const admin = require("firebase-admin");
+const db = require("../firebase");
 
-const validateArticle = (req, res, next) => {
+const validateArticle = async (req, res, next) => {
   const { title, category, summary, fullText, author } = req.body;
 
   // Verifica se todos os campos obrigatórios estão presentes
@@ -19,10 +21,23 @@ const validateArticle = (req, res, next) => {
     });
   }
 
-  if (typeof category !== "number" || category < 1) {
-    return res.status(400).json({
-      error: "Categoria inválida",
-      message: "A categoria deve ser um número positivo",
+  // Validação da categoria - verifica se existe na coleção categories
+  try {
+    const categoriesRef = db.collection("categories");
+    const categorySnapshot = await categoriesRef
+      .where("code", "==", category)
+      .get();
+
+    if (categorySnapshot.empty) {
+      return res.status(400).json({
+        error: "Categoria inválida",
+        message: "A categoria informada não existe",
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      error: "Erro ao validar categoria",
+      message: "Erro ao verificar existência da categoria",
     });
   }
 
@@ -54,11 +69,11 @@ const validateArticle = (req, res, next) => {
   // Se passou por todas as validações, formata os dados
   req.validatedArticle = {
     title,
-    category,
+    category, // agora é o código da categoria
     summary,
     fullText,
     author,
-    publicationDate: admin.firestore.Timestamp.now(), // Define a data atual como padrão
+    publicationDate: admin.firestore.Timestamp.now(),
   };
 
   next();

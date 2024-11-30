@@ -5,7 +5,7 @@ const { validateArticle } = require("../middlewares/articleValidation");
 
 router.get("/", articlesController.getAll);
 
-router.get("/category/:categoryId", articlesController.getByCategory);
+router.get("/category/:categoryCode", articlesController.getByCategory);
 
 router.get("/:id", articlesController.getById);
 
