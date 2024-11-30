@@ -2,36 +2,47 @@
 <template>
   <section class="photos-section q-py-xl">
     <div class="container">
-      <div class="row items-center justify-between q-mb-lg">
-        <div class="row items-center">
-          <q-icon name="eco" color="green" size="md" class="q-mr-sm" />
+      <div class="row items-center justify-between q-mb-xl">
+        <div class="header-title">
+          <OsidiIcon size="24" variant="primary" class="q-mr-md" />
           <h2 class="text-h4 q-my-none">Fotos</h2>
         </div>
-        <q-btn
-          flat
-          color="green"
-          label="Ver galeria completa"
-          class="q-px-md"
-          icon-right="north_east"
-        />
+        <router-link to="/gallery" class="gallery-link">
+          Ver galeria completa
+          <q-icon name="north_east" class="q-ml-sm" />
+        </router-link>
       </div>
 
       <q-carousel
-        v-model="slide"
-        infinite
-        :autoplay="3000"
+        v-model="currentSlide"
+        animated
         arrows
-        navigation-position="bottom"
         navigation
+        swipeable
+        infinite
+        :autoplay="autoplay"
+        @mouseenter="autoplay = false"
+        @mouseleave="autoplay = 3000"
+        class="photos-carousel"
       >
-        <q-carousel-slide v-for="n in 7" :key="n" :name="n">
+        <q-carousel-slide
+          v-for="slideIndex in 4"
+          :key="slideIndex"
+          :name="slideIndex"
+        >
           <div class="row q-col-gutter-md">
-            <div v-for="i in 4" :key="i" class="col-12 col-md-3">
-              <q-img
-                src="assets/imagens/evento.png"
-                :ratio="4/3"
-                class="rounded-borders"
-              />
+            <div
+              v-for="photoIndex in 4"
+              :key="photoIndex"
+              class="col-12 col-sm-6 col-md-3"
+            >
+              <div class="photo-wrapper">
+                <q-img
+                  :src="`assets/imagens/evento.png`"
+                  :ratio="1"
+                  class="photo-image"
+                />
+              </div>
             </div>
           </div>
         </q-carousel-slide>
@@ -41,9 +52,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
+import OsidiIcon from "../shared/OsidiIcon.vue";
 
-const slide = ref(1)
+const currentSlide = ref(1);
+const autoplay = ref(3000);
 </script>
 
 <style scoped>
@@ -53,37 +66,92 @@ const slide = ref(1)
   padding: 0 20px;
 }
 
-.photos-section {
-  background-color: #f5f5f5;
+.header-title {
+  display: flex;
+  align-items: center;
 }
 
-/* Navigation dots styling */
-:deep(.q-carousel__navigation .q-btn) {
-  color: #4caf50 !important;
+.text-h4 {
+  font-size: 32px;
+  font-weight: 500;
 }
 
-:deep(.q-carousel__navigation-inner--bottom) {
-  margin-bottom: -12px;
+.gallery-link {
+  display: flex;
+  align-items: center;
+  color: #11b80e;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.3s;
 }
 
-/* Arrow navigation styling */
-:deep(.q-carousel__arrow) {
-  background: rgba(0, 0, 0, 0.3);
-  color: white;
-  width: 56px;
-  height: 56px;
-  font-size: 24px;
-  border-radius: 50%;
-  margin: 0 16px;
+.gallery-link:hover {
+  opacity: 0.8;
 }
 
-/* Image hover effect */
-.q-img {
-  transition: transform 0.2s ease;
+.gallery-link .q-icon {
+  font-size: 20px;
 }
 
-.q-img:hover {
+.photos-carousel {
+  background: transparent;
+  padding-bottom: 40px;
+}
+
+.photo-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.photo-image {
+  filter: grayscale(100%);
+  transition: transform 0.3s ease;
+}
+
+.photo-wrapper:hover .photo-image {
   transform: scale(1.05);
 }
 
+:deep(.q-carousel__navigation) {
+  bottom: 0;
+}
+
+:deep(.q-carousel__navigation-icon--active),
+:deep(.q-carousel__navigation-icon--inactive) {
+  color: #11b80e !important;
+}
+
+:deep(.q-carousel__navigation-icon--inactive) {
+  opacity: 0.5;
+}
+
+:deep(.q-carousel__arrow) {
+  color: #11b80e;
+  background: rgba(255, 255, 255, 0.1);
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  margin: 0 8px;
+  border-radius: 50%;
+}
+
+:deep(.q-carousel__arrow:hover) {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+:deep(.q-carousel__slide) {
+  padding: 0;
+}
+
+@media (max-width: 599px) {
+  .row.items-center.justify-between {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .gallery-link {
+    margin-top: 1rem;
+  }
+}
 </style>
