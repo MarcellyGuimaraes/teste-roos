@@ -12,8 +12,13 @@
             />
           </router-link>
 
-          <q-tab to="/" label="Home" />
-          <q-tab to="/blog" label="Blog" />
+          <router-link to="/">
+            <q-tab label="Home" />
+          </router-link>
+
+          <router-link to="/blog">
+            <q-tab label="Blog" />
+          </router-link>
 
           <!-- Menu Admin -->
           <q-btn-dropdown flat label="Admin" v-if="isAdmin">
@@ -205,44 +210,6 @@ defineOptions({
 const isAdmin = ref(true);
 
 const route = useRoute();
-
-// Gera breadcrumbs baseado na rota atual
-const breadcrumbs = computed(() => {
-  const path = route.path;
-  const crumbs = [];
-
-  if (path.includes("/blog")) {
-    crumbs.push({ to: "/blog", label: "Blog" });
-    if (route.params.id) {
-      crumbs.push({ label: "Artigo" });
-    }
-  }
-
-  if (path.includes("/articles")) {
-    crumbs.push({ to: "/admin/articles", label: "Artigos" });
-    if (path.includes("/new")) {
-      crumbs.push({ label: "Novo Artigo" });
-    } else if (path.includes("/edit")) {
-      crumbs.push({ label: "Editar Artigo" });
-    }
-  }
-
-  if (path.includes("/categories")) {
-    crumbs.push({ to: "/admin/categories", label: "Categorias" });
-    if (path.includes("/new")) {
-      crumbs.push({ label: "Nova Categoria" });
-    } else if (path.includes("/edit")) {
-      crumbs.push({ label: "Editar Categoria" });
-    }
-  }
-
-  return crumbs;
-});
-
-// Mostra breadcrumbs apenas em páginas específicas
-const showBreadcrumbs = computed(() => {
-  return route.path !== "/";
-});
 </script>
 
 <style scoped>
@@ -286,10 +253,12 @@ const showBreadcrumbs = computed(() => {
 
 a {
   text-decoration: none;
+  color: #fff;
   transition: opacity 0.3s;
 }
 
 a:hover {
+  color: #fff;
   opacity: 0.8;
 }
 

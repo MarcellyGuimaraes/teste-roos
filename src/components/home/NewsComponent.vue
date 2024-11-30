@@ -4,18 +4,14 @@
     <div class="container">
       <!-- Header -->
       <div class="row items-center justify-between q-mb-xl">
-        <div class="row items-center">
-          <q-icon name="eco" color="green" size="md" class="q-mr-sm" />
-          <h2 class="text-h4 q-my-none">{{ title }}</h2>
+        <div class="header-title">
+          <OsidiIcon size="24" variant="primary" class="q-mr-md" />
+          <h2 class="text-h4 q-my-none">Notícias</h2>
         </div>
-        <q-btn
-          flat
-          color="green"
-          :label="buttonLabel"
-          class="q-px-md"
-          icon-right="north_east"
-          :to="{ path: '/blog' }"
-        />
+        <router-link to="/blog" class="visit-blog">
+          Visitar blog
+          <q-icon name="north_east" class="q-ml-sm" />
+        </router-link>
       </div>
 
       <!-- Loading State -->
@@ -39,8 +35,7 @@
             <q-img
               :src="article.imageUrl || '/images/placeholder.jpg'"
               :ratio="16 / 9"
-              style="border-radius: 8px"
-              class="q-mb-md"
+              class="article-image"
             >
               <template v-slot:error>
                 <div class="absolute-full flex flex-center bg-grey-3">
@@ -48,23 +43,16 @@
                 </div>
               </template>
             </q-img>
-            <div class="text-grey-7 text-caption q-mb-sm">
-              {{ article.categoryDetails?.name || article.category }}
+            <div class="article-content">
+              <div class="text-category">
+                {{ article.categoryDetails?.name || article.category }}
+              </div>
+              <h3 class="article-title">{{ article.title }}</h3>
+              <p class="article-summary">{{ article.summary }}</p>
+              <router-link :to="`/blog/${article.id}`" class="read-more">
+                Ler mais
+              </router-link>
             </div>
-            <h3 class="text-h5 q-mb-md text-weight-500 ellipsis-2-lines">
-              {{ article.title }}
-            </h3>
-            <p class="text-grey-8 q-mb-md ellipsis-3-lines">
-              {{ article.summary }}
-            </p>
-            <q-btn
-              flat
-              color="green"
-              :label="readMoreLabel"
-              class="q-px-none"
-              no-caps
-              :to="{ path: `/blog/${article.id}` }"
-            />
           </article>
         </div>
       </div>
@@ -74,22 +62,8 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { api } from "boot/axios"; // Certifique-se de que o boot/axios está configurado
-
-defineProps({
-  title: {
-    type: String,
-    default: "Notícias",
-  },
-  buttonLabel: {
-    type: String,
-    default: "Visitar blog",
-  },
-  readMoreLabel: {
-    type: String,
-    default: "Ler mais",
-  },
-});
+import { api } from "boot/axios";
+import OsidiIcon from "../shared/OsidiIcon.vue";
 
 const articles = ref([]);
 const loading = ref(false);
@@ -120,28 +94,99 @@ onMounted(() => {
   padding: 0 20px;
 }
 
+.header-title {
+  display: flex;
+  align-items: center;
+}
+
+.text-h4 {
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.visit-blog {
+  display: flex;
+  align-items: center;
+  color: #11b80e;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.3s;
+}
+
+.visit-blog:hover {
+  opacity: 0.8;
+}
+
+.visit-blog .q-icon {
+  font-size: 20px;
+}
+
 .news-card {
   height: 100%;
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s ease;
 }
 
-.news-card:hover {
-  transform: translateY(-4px);
+.article-image {
+  border-radius: 12px;
+  margin-bottom: 16px;
 }
 
-.ellipsis-2-lines {
+.article-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.text-category {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.article-title {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.3;
+  margin: 0 0 12px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-.ellipsis-3-lines {
+.article-summary {
+  color: #666;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0 0 16px;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  flex: 1;
+}
+
+.read-more {
+  color: #11b80e;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+  transition: opacity 0.3s;
+}
+
+.read-more:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 599px) {
+  .article-title {
+    font-size: 20px;
+  }
+
+  .article-summary {
+    font-size: 14px;
+  }
 }
 </style>
