@@ -1,5 +1,12 @@
 const admin = require("firebase-admin");
-const serviceAccount = require("./access-key/teste-roos-firebase-adminsdk.json");
+let serviceAccount;
+
+try {
+  // Tenta carregar do arquivo secreto (produção)
+  serviceAccount = require("/etc/secrets/teste-roos-firebase-adminsdk.json");
+} catch (e) {
+  serviceAccount = require("./access-key/teste-roos-firebase-adminsdk.json");
+}
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),

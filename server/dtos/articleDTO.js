@@ -7,7 +7,8 @@ class ArticleDTO {
     if (data.fullText !== undefined) this.fullText = data.fullText;
     if (data.author !== undefined) this.author = data.author;
     if (data.imageUrl !== undefined) this.imageUrl = data.imageUrl;
-    if (data.publicationDate !== undefined) this.publicationDate = data.publicationDate;
+    if (data.publicationDate !== undefined)
+      this.publicationDate = data.publicationDate;
   }
 
   static async validate(data, db, isUpdate = false) {
@@ -41,13 +42,21 @@ class ArticleDTO {
 
     // Validações específicas apenas para campos presentes
     if (data.title !== undefined) {
-      if (typeof data.title !== "string" || data.title.length < 3 || data.title.length > 100) {
+      if (
+        typeof data.title !== "string" ||
+        data.title.length < 3 ||
+        data.title.length > 100
+      ) {
         errors.push("O título deve ter entre 3 e 100 caracteres");
       }
     }
 
     if (data.summary !== undefined) {
-      if (typeof data.summary !== "string" || data.summary.length < 10 || data.summary.length > 500) {
+      if (
+        typeof data.summary !== "string" ||
+        data.summary.length < 10 ||
+        data.summary.length > 500
+      ) {
         errors.push("O resumo deve ter entre 10 e 500 caracteres");
       }
     }
@@ -59,7 +68,11 @@ class ArticleDTO {
     }
 
     if (data.author !== undefined) {
-      if (typeof data.author !== "string" || data.author.length < 2 || data.author.length > 100) {
+      if (
+        typeof data.author !== "string" ||
+        data.author.length < 2 ||
+        data.author.length > 100
+      ) {
         errors.push("O nome do autor deve ter entre 2 e 100 caracteres");
       }
     }
@@ -99,14 +112,15 @@ class ArticleDTO {
   sanitize() {
     // Cria um objeto apenas com os campos definidos
     const sanitized = {};
-    
+
     if (this.title !== undefined) sanitized.title = this.title.trim();
     if (this.category !== undefined) sanitized.category = this.category;
     if (this.summary !== undefined) sanitized.summary = this.summary.trim();
     if (this.fullText !== undefined) sanitized.fullText = this.fullText.trim();
     if (this.author !== undefined) sanitized.author = this.author.trim();
     if (this.imageUrl !== undefined) sanitized.imageUrl = this.imageUrl;
-    if (this.publicationDate !== undefined) sanitized.publicationDate = this.publicationDate;
+    if (this.publicationDate !== undefined)
+      sanitized.publicationDate = this.publicationDate;
 
     return sanitized;
   }

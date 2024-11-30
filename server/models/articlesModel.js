@@ -94,14 +94,6 @@ module.exports = {
       return null;
     }
 
-    const data = doc.data();
-    if (data.imageUrl) {
-      const imagePath = path.join(__dirname, "../public", data.imageUrl);
-      fs.unlink(imagePath, (err) => {
-        if (err) console.error("Erro ao deletar imagem:", err);
-      });
-    }
-
     await docRef.delete();
     return { id: doc.id, ...doc.data() };
   },

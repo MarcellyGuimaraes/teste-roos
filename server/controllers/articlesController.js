@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const ArticleDTO = require("../dtos/articleDTO");
 const db = require("../firebase");
+const { convertToBase64 } = require("../utils/imageUtils");
 
 module.exports = {
   /**
@@ -64,54 +65,43 @@ module.exports = {
       const articleData = req.validatedArticle;
 
       if (req.file) {
-        articleData.imageUrl = `/uploads/${req.file.filename}`;
+        const base64Image = await convertToBase64(req.file);
+        articleData.imageUrl = base64Image;
       }
 
       const newArticle = await articlesModel.create(articleData);
       res.status(201).json(newArticle);
     } catch (error) {
-      // Se houver erro e a imagem foi enviada, remove-a
-      if (req.file) {
-        const imagePath = path.join(
-          __dirname,
-          "../public/uploads",
-          req.file.filename
-        );
-        fs.unlink(imagePath, (err) => {
-          if (err) console.error("Erro ao deletar imagem:", err);
-        });
-      }
       res.status(500).json({ error: "Erro ao criar artigo: " + error.message });
     }
   },
+
   /**
    * Atualiza um artigo existente.
    * @param {string} req.params.id - ID do artigo.
    * @param {object} req.validatedArticle - Dados atualizados do artigo.
    */
-    async update(req, res) {
-      try {
-        const { id } = req.params;
-        const validation = await ArticleDTO.validate(req.body, db, true); // true para indicar que é uma atualização
-        
-        if (!validation.isValid) {
-          return res.status(400).json(validation);
-        }
+  async update(req, res) {
+    try {
+      const { id } = req.params;
+      let updatedData = req.validatedArticle;
 
-        const articleDTO = new ArticleDTO(req.body);
-        const updatedData = articleDTO.sanitize();
-
-        const updatedArticle = await articlesModel.update(id, updatedData);
-        
-        if (!updatedArticle) {
-          return res.status(404).json({ error: "Artigo não encontrado." });
-        }
-        
-        res.status(200).json(updatedArticle);
-      } catch (error) {
-        res.status(500).json({ error: "Erro ao atualizar artigo." + error });
+      if (req.file) {
+        const base64Image = await convertToBase64(req.file);
+        updatedData.imageUrl = base64Image;
       }
-    },
+
+      const updatedArticle = await articlesModel.update(id, updatedData);
+
+      if (!updatedArticle) {
+        return res.status(404).json({ error: "Artigo não encontrado." });
+      }
+
+      res.status(200).json(updatedArticle);
+    } catch (error) {
+      res.status(500).json({ error: "Erro ao atualizar artigo." + error });
+    }
+  },
 
   /**
    * Deleta um artigo pelo ID.

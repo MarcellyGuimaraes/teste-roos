@@ -10,7 +10,6 @@ const validateArticle = async (req, res, next) => {
       summary: req.body.summary,
       fullText: req.body.fullText,
       author: req.body.author,
-      imageUrl: req.file ? `/uploads/${req.file.filename}` : undefined,
       publicationDate: admin.firestore.Timestamp.now(),
     };
 
