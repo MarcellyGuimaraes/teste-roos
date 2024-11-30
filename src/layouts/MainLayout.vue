@@ -39,11 +39,7 @@
           </q-btn-dropdown>
         </q-tabs>
 
-        <q-btn
-          label="Fazer doação"
-          class="q-px-md donation-btn"
-          icon="favorite"
-        />
+        <DonationButton unelevated />
       </q-toolbar>
     </q-header>
 
@@ -199,6 +195,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
+import DonationButton from "../components/shared/DonationButton.vue";
 
 defineOptions({
   name: "MainLayout",
