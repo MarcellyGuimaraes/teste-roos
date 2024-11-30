@@ -6,10 +6,15 @@ module.exports = {
    */
   async getAll(req, res) {
     try {
-      const articles = await articlesModel.getAll();
+      var articles = await articlesModel.getAll();
+      const limit = parseInt(req.query.limit);
+      if (!isNaN(limit) && limit > 0) {
+        articles = articles.slice(0, limit);
+      }
+
       res.status(200).json(articles);
     } catch (error) {
-      res.status(500).json({ error: "Erro ao buscar artigos." });
+      res.status(500).json({ error: "Erro ao buscar artigos." + error });
     }
   },
 
