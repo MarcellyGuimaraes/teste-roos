@@ -1,24 +1,24 @@
-<!-- src/pages/BlogPage.vue -->
 <template>
-  <q-page padding>
-    <!-- Banner Space -->
-    <div class="banner q-mb-xl">
-      <div class="text-center">Espaço Banner</div>
-    </div>
+  <q-page>
+    <div class="container q-py-xl">
+      <!-- Banner -->
+      <div class="banner">
+        <div class="text-center">Espaço Banner</div>
+      </div>
 
-    <div class="container">
-      <div class="row">
+      <div class="row q-col-gutter-xl">
         <!-- Left Sidebar -->
         <div class="col-12 col-md-3">
-          <h5 class="text-h6 q-mb-md">Categorias</h5>
+          <h5 class="sidebar-title q-mb-md">Categorias</h5>
 
           <!-- Search -->
           <q-input
             v-model="search"
-            outlined
+            borderless
             dense
             placeholder="Pesquisar"
-            class="q-mb-md"
+            class="search-input q-mb-md"
+            bg-color="white"
             @update:model-value="currentPage = 1"
           >
             <template v-slot:prepend>
@@ -27,119 +27,107 @@
           </q-input>
 
           <!-- Categories List -->
-          <q-list padding class="rounded-borders">
-            <q-item
-              clickable
-              :active="!activeCategory"
+          <div class="categories-list">
+            <div
+              class="category-item"
+              :class="{ active: !activeCategory }"
               @click="
                 () => {
                   activeCategory = null;
                   currentPage = 1;
                 }
               "
-              active-class="bg-green-1 text-green"
             >
-              <q-item-section>Todas as categorias</q-item-section>
-            </q-item>
-            <q-item
+              Todas as categorias
+            </div>
+            <div
+              class="category-item"
+              :class="{ active: activeCategory?.name === 'Categoria X' }"
+              @click="
+                () => {
+                  activeCategory = { name: 'Categoria X' };
+                  currentPage = 1;
+                }
+              "
+            >
+              Categoria X
+            </div>
+            <div
               v-for="category in categories"
               :key="category.id"
-              clickable
-              :active="activeCategory?.id === category.id"
+              class="category-item"
+              :class="{ active: activeCategory?.id === category.id }"
               @click="
                 () => {
                   activeCategory = category;
                   currentPage = 1;
                 }
               "
-              active-class="bg-green-1 text-green"
             >
-              <q-item-section>{{ category.name }}</q-item-section>
-            </q-item>
-          </q-list>
+              {{ category.name }}
+            </div>
+          </div>
         </div>
 
         <!-- Main Content -->
-        <div class="col-12 col-md-9 q-pl-md">
-          <div class="row items-center q-mb-lg">
+        <div class="col-12 col-md-9">
+          <!-- Current Category Title -->
+          <div class="q-mb-lg">
             <h5 class="text-h6 q-my-none">
-              {{ activeCategory?.name || "Todas as categorias" }}
+              {{ activeCategory ? activeCategory.name : "Todas as categorias" }}
             </h5>
           </div>
 
           <!-- Loading State -->
-          <div v-if="loading" class="row justify-center q-pa-xl">
+          <div v-if="loading" class="row justify-center q-pa-lg">
             <q-spinner color="green" size="3em" />
           </div>
 
           <!-- Error State -->
-          <div v-else-if="error" class="row justify-center q-pa-xl">
+          <div v-else-if="error" class="row justify-center q-pa-lg">
             <p class="text-negative">{{ error }}</p>
           </div>
 
-          <!-- Empty State -->
-          <div
-            v-else-if="paginatedArticles.length === 0"
-            class="row justify-center q-pa-xl"
-          >
-            <p class="text-grey-7">Nenhum artigo encontrado</p>
-          </div>
-
-          <!-- Blog Posts Grid -->
-          <div v-else class="row q-col-gutter-lg">
-            <div
-              v-for="article in paginatedArticles"
-              :key="article.id"
-              class="col-12"
-            >
-              <q-card flat bordered class="blog-card">
-                <div class="row q-col-gutter-lg">
-                  <div class="col-12 col-md-4">
-                    <q-img
-                      :src="article.imageUrl || '/images/placeholder.jpg'"
-                      :ratio="4 / 3"
-                      style="border-radius: 8px"
-                    >
-                      <template v-slot:error>
-                        <div class="absolute-full flex flex-center bg-grey-3">
-                          <q-icon name="image" size="3em" color="grey-7" />
-                        </div>
-                      </template>
-                    </q-img>
-                  </div>
-                  <div class="col-12 col-md-8 q-pa-md">
-                    <div class="text-caption text-green q-mb-sm">
-                      {{ article.categoryDetails?.name || article.category }}
-                    </div>
-                    <h2 class="text-h5 q-mt-none q-mb-sm">
-                      {{ article.title }}
-                    </h2>
-                    <p class="text-grey-8 q-mb-md">{{ article.summary }}</p>
-                    <q-btn
-                      flat
-                      color="green"
-                      label="Ler mais"
-                      class="q-px-none"
-                      no-caps
-                      :to="{ path: `/blog/${article.id}` }"
-                    />
-                  </div>
+          <!-- Articles List -->
+          <template v-else>
+            <div class="articles-list">
+              <article
+                v-for="article in paginatedArticles"
+                :key="article.id"
+                class="article-item"
+              >
+                <div class="article-image">
+                  <q-img
+                    :src="article.imageUrl || '/images/placeholder.jpg'"
+                    :ratio="16 / 9"
+                  />
                 </div>
-              </q-card>
+                <div class="article-content">
+                  <div class="article-category">
+                    {{ article.categoryDetails?.name || article.category }}
+                  </div>
+                  <h2 class="article-title">{{ article.title }}</h2>
+                  <p class="article-summary">{{ article.summary }}</p>
+                  <router-link :to="`/blog/${article.id}`" class="read-more">
+                    Ler mais
+                  </router-link>
+                </div>
+              </article>
             </div>
-          </div>
 
-          <!-- Pagination -->
-          <div v-if="totalPages > 1" class="row justify-center q-mt-xl">
-            <q-pagination
-              v-model="currentPage"
-              :max="totalPages"
-              direction-links
-              boundary-links
-              color="green"
-              active-color="green"
-            />
-          </div>
+            <!-- Pagination -->
+            <div class="pagination-wrapper">
+              <div class="flex justify-end">
+                <q-pagination
+                  v-if="totalPages > 1"
+                  v-model="currentPage"
+                  :max="totalPages"
+                  :max-pages="4"
+                  direction-links
+                />
+              </div>
+            </div>
+          </template>
         </div>
       </div>
     </div>
@@ -173,28 +161,136 @@ onMounted(async () => {
 .container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 .banner {
-  background-color: #f5f5f5;
-  height: 200px;
+  background: #f2f2f2;
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 12px;
+  margin: 24px 20px;
+}
+
+.sidebar-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #202020;
+}
+
+.search-input {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+.search-input :deep(.q-field__marginal) {
+  color: #999;
+}
+
+.categories-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-item {
+  padding: 8px 12px;
+  color: #666;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-bottom: 2px;
+}
+
+.category-item.active {
+  background: #e8f5e9;
+  color: #11b80e;
+}
+
+.category-x.active {
+  background: #e8f5e9;
+  color: #11b80e;
+}
+
+.articles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.article-item {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.article-image :deep(.q-img) {
   border-radius: 8px;
+  overflow: hidden;
 }
 
-.blog-card {
-  transition: transform 0.2s;
+.article-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.blog-card:hover {
-  transform: translateY(-4px);
+.article-category {
+  color: #11b80e;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.article-title {
+  font-size: 22px;
+  font-weight: 500;
+  color: #202020;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.article-summary {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.read-more {
+  color: #11b80e;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+.pagination-wrapper {
+  margin-top: 40px;
+}
+
+:deep(.q-pagination) {
+  .q-btn {
+    padding: 0 8px;
+    min-height: 32px;
+    font-size: 14px;
+    color: #666;
+  }
+
+  .q-btn--active {
+    background: #11b80e;
+    color: white;
+  }
 }
 
 @media (max-width: 767px) {
-  .container {
-    padding: 0 20px;
+  .article-item {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .pagination-wrapper {
+    justify-content: center;
   }
 }
 </style>
