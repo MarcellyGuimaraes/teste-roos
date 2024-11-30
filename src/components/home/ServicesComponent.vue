@@ -4,31 +4,24 @@
     <div class="container">
       <div class="row">
         <div class="col-12">
-          <q-img
-            src="src/assets/imagens/servicos.png"
-            style="height: 600px; border-radius: 8px"
-          >
-            <div class="absolute-full bg-black" style="opacity: 0.4"></div>
-            <div class="absolute-right text-white" style="width: 50%; padding: 2rem;">
+          <q-img src="src/assets/imagens/servicos.png" class="services-image">
+            <div class="absolute-full overlay"></div>
+            <div class="content-wrapper">
               <h2 class="text-h4 q-mb-lg">
-                Facilitando a vinda para o Brasil e fornecendo todo o auxílio possível.
+                Facilitando a vinda para o Brasil e fornecendo todo o auxílio
+                possível.
               </h2>
-              
+
               <div class="services-list">
-                <div 
-                  v-for="service in services" 
-                  :key="service" 
-                  class="service-item q-mb-md"
+                <div
+                  v-for="service in services"
+                  :key="service"
+                  class="service-item"
                 >
-                  <div class="row items-center">
-                    <q-icon 
-                      name="check_circle" 
-                      color="green" 
-                      size="sm" 
-                      class="q-mr-sm" 
-                    />
-                    <span>{{ service }}</span>
+                  <div class="service-icon">
+                    <q-icon name="check_circle" color="green" />
                   </div>
+                  <span class="service-text">{{ service }}</span>
                 </div>
               </div>
             </div>
@@ -41,13 +34,13 @@
 
 <script setup>
 const services = [
-  'Planejamento',
-  'Suporte e equipe de implantação',
-  'Acompanhamento continuo',
-  'Acompanhamento na educação',
-  'Auxilio para as familias',
-  'Suporte emocional'
-]
+  "Planejamento",
+  "Suporte e equipe de implantação",
+  "Acompanhamento contínuo",
+  "Acompanhamento na educação",
+  "Auxílio para as famílias",
+  "Suporte emocional",
+];
 </script>
 
 <style scoped>
@@ -57,15 +50,86 @@ const services = [
   padding: 0 20px;
 }
 
+.services-image {
+  height: 600px;
+  border-radius: 12px;
+}
+
+.overlay {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 40%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+}
+
+.content-wrapper {
+  position: absolute;
+  right: 0;
+  top: 100px;
+  bottom: 0;
+  width: 50%;
+  height: 500px;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.text-h4 {
+  color: white;
+  font-size: 32px;
+  line-height: 1.3;
+  font-weight: 500;
+}
+
+.services-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .service-item {
-  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.service-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-icon :deep(.q-icon) {
+  font-size: 24px;
+  color: #11b80e;
+}
+
+.service-text {
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {
-  .absolute-right {
-    width: 100% !important;
-    background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.4));
-    bottom: 0;
+  .content-wrapper {
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4));
+    padding: 32px;
+    justify-content: flex-end;
+  }
+
+  .overlay {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+  }
+
+  .text-h4 {
+    font-size: 24px;
+  }
+
+  .service-text {
+    font-size: 14px;
   }
 }
 </style>
