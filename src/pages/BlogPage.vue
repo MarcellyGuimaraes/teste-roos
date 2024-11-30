@@ -96,7 +96,7 @@
                 <div class="row q-col-gutter-lg">
                   <div class="col-12 col-md-4">
                     <q-img
-                      :src="article.image || '/images/placeholder.jpg'"
+                      :src="article.imageUrl || '/images/placeholder.jpg'"
                       :ratio="4 / 3"
                       style="border-radius: 8px"
                     >

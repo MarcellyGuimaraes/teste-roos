@@ -37,7 +37,7 @@
         >
           <article class="news-card">
             <q-img
-              :src="article.image || '/images/placeholder.jpg'"
+              :src="article.imageUrl || '/images/placeholder.jpg'"
               :ratio="16 / 9"
               style="border-radius: 8px"
               class="q-mb-md"

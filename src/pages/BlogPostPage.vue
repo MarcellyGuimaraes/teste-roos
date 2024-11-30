@@ -56,7 +56,7 @@
 
         <!-- Featured Image -->
         <q-img
-          :src="article.image || '/images/placeholder.jpg'"
+          :src="article.imageUrl || '/images/placeholder.jpg'"
           class="rounded-borders q-mb-lg"
           style="height: 500px"
         >
