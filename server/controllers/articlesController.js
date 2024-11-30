@@ -1,4 +1,6 @@
 const articlesModel = require("../models/articlesModel");
+const fs = require("fs");
+const path = require("path");
 
 module.exports = {
   /**
@@ -58,13 +60,28 @@ module.exports = {
   async create(req, res) {
     try {
       const articleData = req.validatedArticle;
+
+      if (req.file) {
+        articleData.imageUrl = `/uploads/${req.file.filename}`;
+      }
+
       const newArticle = await articlesModel.create(articleData);
       res.status(201).json(newArticle);
     } catch (error) {
-      res.status(500).json({ error: "Erro ao criar artigo." });
+      // Se houver erro e a imagem foi enviada, remove-a
+      if (req.file) {
+        const imagePath = path.join(
+          __dirname,
+          "../public/uploads",
+          req.file.filename
+        );
+        fs.unlink(imagePath, (err) => {
+          if (err) console.error("Erro ao deletar imagem:", err);
+        });
+      }
+      res.status(500).json({ error: "Erro ao criar artigo: " + error.message });
     }
   },
-
   /**
    * Atualiza um artigo existente.
    * @param {string} req.params.id - ID do artigo.
@@ -92,9 +109,11 @@ module.exports = {
     try {
       const { id } = req.params;
       const deletedArticle = await articlesModel.delete(id);
+
       if (!deletedArticle) {
         return res.status(404).json({ error: "Artigo não encontrado." });
       }
+
       res.status(200).json({ message: "Artigo deletado com sucesso." });
     } catch (error) {
       res.status(500).json({ error: "Erro ao deletar artigo." });

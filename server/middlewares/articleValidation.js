@@ -1,11 +1,9 @@
-// middlewares/articleValidation.js
 const admin = require("firebase-admin");
 const db = require("../firebase");
 
 const validateArticle = async (req, res, next) => {
   const { title, category, summary, fullText, author } = req.body;
 
-  // Verifica se todos os campos obrigatórios estão presentes
   if (!title || !category || !summary || !fullText || !author) {
     return res.status(400).json({
       error: "Campos obrigatórios faltando",
@@ -13,7 +11,6 @@ const validateArticle = async (req, res, next) => {
     });
   }
 
-  // Validações específicas para cada campo
   if (typeof title !== "string" || title.length < 3 || title.length > 100) {
     return res.status(400).json({
       error: "Título inválido",
@@ -21,7 +18,6 @@ const validateArticle = async (req, res, next) => {
     });
   }
 
-  // Validação da categoria - verifica se existe na coleção categories
   try {
     const categoriesRef = db.collection("categories");
     const categorySnapshot = await categoriesRef
@@ -66,10 +62,9 @@ const validateArticle = async (req, res, next) => {
     });
   }
 
-  // Se passou por todas as validações, formata os dados
   req.validatedArticle = {
     title,
-    category, // agora é o código da categoria
+    category,
     summary,
     fullText,
     author,

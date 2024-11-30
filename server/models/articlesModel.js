@@ -1,5 +1,7 @@
 const db = require("../firebase");
 const admin = require("firebase-admin");
+const fs = require("fs");
+const path = require("path");
 const collection = db.collection("articles");
 
 module.exports = {
@@ -16,14 +18,13 @@ module.exports = {
    * @param {string} categoryCode - ID da categoria.
    */
   async getByCategory(categoryCode) {
-    // Primeiro, busca a categoria
     const categorySnapshot = await db
       .collection("categories")
       .where("code", "==", categoryCode)
       .get();
 
     if (categorySnapshot.empty) {
-      return []; // ou throw new Error("Categoria não encontrada");
+      return [];
     }
 
     const categoryData = {
@@ -31,7 +32,6 @@ module.exports = {
       ...categorySnapshot.docs[0].data(),
     };
 
-    // Depois, busca os artigos dessa categoria
     const articlesSnapshot = await collection
       .where("category", "==", categoryCode)
       .get();
@@ -39,7 +39,7 @@ module.exports = {
     const articles = articlesSnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
-      categoryDetails: categoryData, // inclui os detalhes da categoria
+      categoryDetails: categoryData,
     }));
 
     return articles;
@@ -62,12 +62,10 @@ module.exports = {
    * @param {object} articleData - Dados do artigo a ser criado.
    */
   async create(articleData) {
-    const articleWithTimestamp = {
+    const docRef = await collection.add({
       ...articleData,
       publicationDate: admin.firestore.Timestamp.now(),
-    };
-
-    const docRef = await collection.add(articleWithTimestamp);
+    });
     const doc = await docRef.get();
     return { id: doc.id, ...doc.data() };
   },
@@ -91,9 +89,19 @@ module.exports = {
   async delete(id) {
     const docRef = collection.doc(id);
     const doc = await docRef.get();
+
     if (!doc.exists) {
       return null;
     }
+
+    const data = doc.data();
+    if (data.imageUrl) {
+      const imagePath = path.join(__dirname, "../public", data.imageUrl);
+      fs.unlink(imagePath, (err) => {
+        if (err) console.error("Erro ao deletar imagem:", err);
+      });
+    }
+
     await docRef.delete();
     return { id: doc.id, ...doc.data() };
   },

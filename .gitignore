@@ -32,6 +32,7 @@ yarn-error.log*
 # local .env files
 .env.local*
 
-# Chaves de acecsso firebase
-
+# Chaves de acesso firebase
 /server/access-key
+
+/public/uploads
