@@ -91,7 +91,7 @@ export default {
         form.value = response.data;
       } catch (error) {
         $q.notify({
-          color: "negative",
+          type: "negative",
           message: "Erro ao carregar categoria",
           icon: "report_problem",
         });
@@ -109,18 +109,17 @@ export default {
         await api[method](url, form.value);
 
         $q.notify({
-          color: "positive",
+          type: "positive",
           message: `Categoria ${
             props.categoryId ? "atualizada" : "criada"
           } com sucesso`,
           icon: "check",
         });
 
-        // Redireciona para a lista de categorias
-        this.$router.push({ name: "categories" });
+        window.location.href = `${window.location.origin}/#/admin/categories`;
       } catch (error) {
         $q.notify({
-          color: "negative",
+          type: "negative",
           message: "Erro ao salvar categoria",
           icon: "report_problem",
         });

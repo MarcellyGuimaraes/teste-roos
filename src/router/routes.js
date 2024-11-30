@@ -22,19 +22,19 @@ const routes = [
     children: [
       {
         path: "",
-        component: () => import("components/articles/ArticleForm.vue"),
+        component: () => import("components/forms/ArticleForm.vue"),
       },
     ],
   },
   {
-    path: "/articles/:id/edit",
+    path: "/articles/:articleId/edit",
     name: "article-edit",
-    props: true,
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
         path: "",
-        component: () => import("components/articles/ArticleForm.vue"),
+        props: true,
+        component: () => import("components/forms/ArticleForm.vue"),
       },
     ],
   },
@@ -45,19 +45,41 @@ const routes = [
     children: [
       {
         path: "",
-        component: () => import("components/categories/CategoryForm.vue"),
+        component: () => import("components/forms/CategoryForm.vue"),
       },
     ],
   },
   {
-    path: "/categories/:id/edit",
+    path: "/categories/:categoryId/edit",
     name: "category-edit",
-    props: true,
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
         path: "",
-        component: () => import("components/categories/CategoryForm.vue"),
+        props: true,
+        component: () => import("components/forms/CategoryForm.vue"),
+      },
+    ],
+  },
+  {
+    path: "/admin/articles",
+    name: "articles-manage",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/ArticlesManagePage.vue"),
+      },
+    ],
+  },
+  {
+    path: "/admin/categories",
+    name: "categories-manage",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/CategoriesManagePage.vue"),
       },
     ],
   },

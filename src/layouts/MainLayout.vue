@@ -3,20 +3,50 @@
     <q-header elevated>
       <q-toolbar class="justify-evenly">
         <q-tabs class="q-mr-xl">
-          <img src="src/assets/imagens/logo.png" style="height: 40px" alt="OSIDI Logo" class="q-mr-md"/>
-          <q-tab label="Label" />
-          <q-tab label="Label" />
-          <q-tab label="Label" />
-          <q-tab label="Label" />
+          <router-link to="/">
+            <img
+              src="src/assets/imagens/logo.png"
+              style="height: 40px"
+              alt="OSIDI Logo"
+              class="q-mr-md"
+            />
+          </router-link>
+
+          <q-tab to="/" label="Home" />
+          <q-tab to="/blog" label="Blog" />
+
+          <!-- Menu Admin -->
+          <q-btn-dropdown flat label="Admin" v-if="isAdmin">
+            <q-list>
+              <q-item clickable v-close-popup to="/articles/new">
+                <q-item-section>Novo Artigo</q-item-section>
+              </q-item>
+
+              <q-item clickable v-close-popup to="/categories/new">
+                <q-item-section>Nova Categoria</q-item-section>
+              </q-item>
+
+              <q-separator />
+
+              <q-item clickable v-close-popup to="/admin/articles">
+                <q-item-section>Gerenciar Artigos</q-item-section>
+              </q-item>
+
+              <q-item clickable v-close-popup to="/admin/categories">
+                <q-item-section>Gerenciar Categorias</q-item-section>
+              </q-item>
+            </q-list>
+          </q-btn-dropdown>
         </q-tabs>
 
         <q-btn
           label="Fazer doação"
-          class="q-px-md"
+          class="q-px-md donation-btn"
           icon="favorite"
         />
       </q-toolbar>
     </q-header>
+
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -28,14 +58,53 @@
           <!-- Logo and Social Links -->
           <div class="col-12 col-md-3">
             <div class="q-mb-lg">
-              <img src="src/assets/imagens/logo.png" alt="OSIDI" style="height: 40px" />
+              <img
+                src="src/assets/imagens/logo.png"
+                alt="OSIDI"
+                style="height: 40px"
+              />
             </div>
             <div class="row q-gutter-md">
-              <q-btn flat round color="white" icon="fab fa-instagram" href="#" target="_blank" />
-              <q-btn flat round color="white" icon="fab fa-twitter" href="#" target="_blank" />
-              <q-btn flat round color="white" icon="fab fa-linkedin" href="#" target="_blank" />
-              <q-btn flat round color="white" icon="fab fa-youtube" href="#" target="_blank" />
-              <q-btn flat round color="white" icon="fab fa-whatsapp" href="#" target="_blank" />
+              <q-btn
+                flat
+                round
+                color="white"
+                icon="fab fa-instagram"
+                href="#"
+                target="_blank"
+              />
+              <q-btn
+                flat
+                round
+                color="white"
+                icon="fab fa-twitter"
+                href="#"
+                target="_blank"
+              />
+              <q-btn
+                flat
+                round
+                color="white"
+                icon="fab fa-linkedin"
+                href="#"
+                target="_blank"
+              />
+              <q-btn
+                flat
+                round
+                color="white"
+                icon="fab fa-youtube"
+                href="#"
+                target="_blank"
+              />
+              <q-btn
+                flat
+                round
+                color="white"
+                icon="fab fa-whatsapp"
+                href="#"
+                target="_blank"
+              />
             </div>
           </div>
 
@@ -44,22 +113,46 @@
             <h6 class="text-h6 q-mb-md">Mapa do site</h6>
             <nav>
               <ul class="list-unstyled">
-                <li class="q-mb-sm"><a href="#" class="text-white">Sobre nós</a></li>
-                <li class="q-mb-sm"><a href="#" class="text-white">Fale conosco</a></li>
-                <li class="q-mb-sm"><a href="#" class="text-white">Termos de uso</a></li>
-                <li class="q-mb-sm"><a href="#" class="text-white">Privacidade</a></li>
+                <li class="q-mb-sm">
+                  <router-link to="/" class="text-white">Home</router-link>
+                </li>
+                <li class="q-mb-sm">
+                  <router-link to="/blog" class="text-white">Blog</router-link>
+                </li>
+                <li class="q-mb-sm">
+                  <a href="#" class="text-white">Sobre nós</a>
+                </li>
+                <li class="q-mb-sm">
+                  <a href="#" class="text-white">Fale conosco</a>
+                </li>
               </ul>
             </nav>
           </div>
 
           <div class="col-12 col-sm-6 col-md-3">
-            <h6 class="text-h6 q-mb-md">Produto</h6>
+            <h6 class="text-h6 q-mb-md">Admin</h6>
             <nav>
               <ul class="list-unstyled">
-                <li class="q-mb-sm"><a href="#" class="text-white">Sobre nós</a></li>
-                <li class="q-mb-sm"><a href="#" class="text-white">Fale conosco</a></li>
-                <li class="q-mb-sm"><a href="#" class="text-white">Termos de uso</a></li>
-                <li class="q-mb-sm"><a href="#" class="text-white">Privacidade</a></li>
+                <li class="q-mb-sm">
+                  <router-link to="/articles/new" class="text-white"
+                    >Novo Artigo</router-link
+                  >
+                </li>
+                <li class="q-mb-sm">
+                  <router-link to="/categories/new" class="text-white"
+                    >Nova Categoria</router-link
+                  >
+                </li>
+                <li class="q-mb-sm">
+                  <router-link to="/admin/articles" class="text-white"
+                    >Gerenciar Artigos</router-link
+                  >
+                </li>
+                <li class="q-mb-sm">
+                  <router-link to="/admin/categories" class="text-white"
+                    >Gerenciar Categorias</router-link
+                  >
+                </li>
               </ul>
             </nav>
           </div>
@@ -68,23 +161,33 @@
             <h6 class="text-h6 q-mb-md">Conhecimento</h6>
             <nav>
               <ul class="list-unstyled">
-                <li class="q-mb-sm"><a href="#" class="text-white">Blog</a></li>
-                <li class="q-mb-sm"><a href="#" class="text-white">Central de Ajuda</a></li>
+                <li class="q-mb-sm">
+                  <router-link to="/blog" class="text-white">Blog</router-link>
+                </li>
+                <li class="q-mb-sm">
+                  <a href="#" class="text-white">Central de Ajuda</a>
+                </li>
               </ul>
             </nav>
           </div>
         </div>
 
         <!-- Copyright Bar -->
-        <div class="row items-center justify-between q-pt-md" style="border-top: 1px solid rgba(255,255,255,0.1)">
+        <div
+          class="row items-center justify-between q-pt-md"
+          style="border-top: 1px solid rgba(255, 255, 255, 0.1)"
+        >
           <div class="col-12 col-md-auto">
             <p class="text-grey-5 q-my-none">
-              © 2024 <span class="text-green">OSIDI</span> - Todos os direitos reservados
+              © 2024 <span class="text-green">OSIDI</span> - Todos os direitos
+              reservados
             </p>
           </div>
           <div class="col-12 col-md-auto">
             <p class="text-grey-5 q-my-none">
-              Desenvolvido em parceria <a href="#" class="text-white">Roos Corporation</a> ft. <a href="#" class="text-white">morais</a>
+              Desenvolvido em parceria
+              <a href="#" class="text-white">Roos Corporation</a> ft.
+              <a href="#" class="text-white">morais</a>
             </p>
           </div>
         </div>
@@ -94,10 +197,55 @@
 </template>
 
 <script setup>
-defineOptions({
-  name: 'MainLayout'
-})
+import { ref, computed } from "vue";
+import { useRoute } from "vue-router";
 
+defineOptions({
+  name: "MainLayout",
+});
+
+// Simula verificação de admin - você deve implementar sua própria lógica de autenticação
+const isAdmin = ref(true);
+
+const route = useRoute();
+
+// Gera breadcrumbs baseado na rota atual
+const breadcrumbs = computed(() => {
+  const path = route.path;
+  const crumbs = [];
+
+  if (path.includes("/blog")) {
+    crumbs.push({ to: "/blog", label: "Blog" });
+    if (route.params.id) {
+      crumbs.push({ label: "Artigo" });
+    }
+  }
+
+  if (path.includes("/articles")) {
+    crumbs.push({ to: "/admin/articles", label: "Artigos" });
+    if (path.includes("/new")) {
+      crumbs.push({ label: "Novo Artigo" });
+    } else if (path.includes("/edit")) {
+      crumbs.push({ label: "Editar Artigo" });
+    }
+  }
+
+  if (path.includes("/categories")) {
+    crumbs.push({ to: "/admin/categories", label: "Categorias" });
+    if (path.includes("/new")) {
+      crumbs.push({ label: "Nova Categoria" });
+    } else if (path.includes("/edit")) {
+      crumbs.push({ label: "Editar Categoria" });
+    }
+  }
+
+  return crumbs;
+});
+
+// Mostra breadcrumbs apenas em páginas específicas
+const showBreadcrumbs = computed(() => {
+  return route.path !== "/";
+});
 </script>
 
 <style scoped>
@@ -115,12 +263,12 @@ defineOptions({
   background-color: #374835;
 }
 
-.q-btn {
+.donation-btn {
   border-radius: 50px;
-  background-color: #11B80E;
+  background-color: #11b80e;
 }
 
-.q-btn:before{
+.donation-btn:before {
   border-radius: 50px;
 }
 
@@ -148,12 +296,17 @@ a:hover {
   opacity: 0.8;
 }
 
+/* Área administrativa */
+.admin-link {
+  color: #11b80e;
+}
+
 /* Responsive Styles */
 @media (max-width: 767px) {
   .row.justify-between {
     text-align: center;
   }
-  
+
   .col-12 {
     margin-bottom: 1rem;
   }

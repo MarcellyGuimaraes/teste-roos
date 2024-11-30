@@ -1,6 +1,8 @@
 const articlesModel = require("../models/articlesModel");
 const fs = require("fs");
 const path = require("path");
+const ArticleDTO = require("../dtos/articleDTO");
+const db = require("../firebase");
 
 module.exports = {
   /**
@@ -87,19 +89,29 @@ module.exports = {
    * @param {string} req.params.id - ID do artigo.
    * @param {object} req.validatedArticle - Dados atualizados do artigo.
    */
-  async update(req, res) {
-    try {
-      const { id } = req.params;
-      const updatedData = req.validatedArticle;
-      const updatedArticle = await articlesModel.update(id, updatedData);
-      if (!updatedArticle) {
-        return res.status(404).json({ error: "Artigo não encontrado." });
+    async update(req, res) {
+      try {
+        const { id } = req.params;
+        const validation = await ArticleDTO.validate(req.body, db, true); // true para indicar que é uma atualização
+        
+        if (!validation.isValid) {
+          return res.status(400).json(validation);
+        }
+
+        const articleDTO = new ArticleDTO(req.body);
+        const updatedData = articleDTO.sanitize();
+
+        const updatedArticle = await articlesModel.update(id, updatedData);
+        
+        if (!updatedArticle) {
+          return res.status(404).json({ error: "Artigo não encontrado." });
+        }
+        
+        res.status(200).json(updatedArticle);
+      } catch (error) {
+        res.status(500).json({ error: "Erro ao atualizar artigo." + error });
       }
-      res.status(200).json(updatedArticle);
-    } catch (error) {
-      res.status(500).json({ error: "Erro ao atualizar artigo." });
-    }
-  },
+    },
 
   /**
    * Deleta um artigo pelo ID.

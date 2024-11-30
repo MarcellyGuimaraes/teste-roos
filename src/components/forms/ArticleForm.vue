@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { api } from "src/boot/axios";
 import { useQuasar } from "quasar";
 
@@ -146,7 +146,7 @@ export default {
         categories.value = response.data;
       } catch (error) {
         $q.notify({
-          color: "negative",
+          type: "negative",
           message: "Erro ao carregar categorias",
           icon: "report_problem",
         });
@@ -170,7 +170,7 @@ export default {
         };
       } catch (error) {
         $q.notify({
-          color: "negative",
+          type: "negative",
           message: "Erro ao carregar artigo",
           icon: "report_problem",
         });
@@ -179,41 +179,59 @@ export default {
 
     const onSubmit = async () => {
       try {
-        const formData = new FormData();
+        // Prepara os dados básicos do artigo sempre necessários
+        const articleData = {
+          title: form.value.title,
+          category:
+            typeof form.value.category === "object"
+              ? form.value.category.code
+              : form.value.category,
+          summary: form.value.summary,
+          fullText: form.value.fullText,
+          author: form.value.author,
+        };
 
-        // Adiciona todos os campos ao FormData
-        Object.keys(form.value).forEach((key) => {
-          if (key !== "image" && key !== "imageUrl") {
-            formData.append(key, form.value[key]);
-          }
-        });
-
-        // Adiciona a imagem se houver
-        if (form.value.image) {
-          formData.append("image", form.value.image);
+        // Se houver uma imagem existente e não estiver enviando uma nova
+        if (form.value.imageUrl && !form.value.image) {
+          articleData.imageUrl = form.value.imageUrl;
         }
 
         const url = props.articleId
           ? `/articles/${props.articleId}`
           : "/articles";
 
-        const method = props.articleId ? "put" : "post";
+        let response;
 
-        await api[method](url, formData);
+        // Se tiver uma nova imagem, usa FormData
+        if (form.value.image) {
+          const formData = new FormData();
+          // Adiciona todos os campos ao FormData
+          Object.entries(articleData).forEach(([key, value]) => {
+            formData.append(key, value);
+          });
+          formData.append("image", form.value.image);
+
+          response = await api[props.articleId ? "put" : "post"](url, formData);
+        } else {
+          // Sem nova imagem, envia como JSON
+          response = await api[props.articleId ? "put" : "post"](
+            url,
+            articleData
+          );
+        }
 
         $q.notify({
-          color: "positive",
+          type: "positive",
           message: `Artigo ${
             props.articleId ? "atualizado" : "criado"
           } com sucesso`,
           icon: "check",
         });
-
-        // Redireciona para a lista de artigos
-        this.$router.push({ name: "articles" });
+        window.location.href = `${window.location.origin}/#/admin/articles`;
       } catch (error) {
+        console.error("Erro ao salvar artigo:", error);
         $q.notify({
-          color: "negative",
+          type: "negative",
           message: "Erro ao salvar artigo",
           icon: "report_problem",
         });
