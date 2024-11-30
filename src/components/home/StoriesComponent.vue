@@ -86,6 +86,7 @@
 @media (max-width: 599px) {
   .story-image {
     height: 300px;
+    max-width: 100%;
   }
 
   .story-text {
