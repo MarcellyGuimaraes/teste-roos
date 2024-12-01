@@ -73,7 +73,13 @@
     </q-header>
 
     <!-- Mobile Menu Dialog -->
-    <q-dialog v-model="mobileMenuOpen" position="right" full-height>
+    <q-dialog
+      v-model="mobileMenuOpen"
+      position="right"
+      seamless
+      maximized
+      full-height
+    >
       <q-card class="mobile-menu-card">
         <q-toolbar class="mobile-menu-header">
           <div class="row full-width items-center justify-between">
@@ -197,12 +203,20 @@
           <div class="col-6 col-md-3">
             <h6 class="footer-title">Mapa do site</h6>
             <ul class="footer-links">
-              <li><router-link to="/sobre-nos">Sobre nós</router-link></li>
+              <li><router-link to="/">Home</router-link></li>
               <li>
-                <router-link to="/fale-conosco">Fale conosco</router-link>
+                <router-link to="/sobre-nos">Sobre nós</router-link>
               </li>
-              <li><router-link to="/termos">Termos de uso</router-link></li>
-              <li><router-link to="/privacidade">Privacidade</router-link></li>
+              <li>
+                <router-link to="/admin/articles"
+                  >Gerenciar Artigos</router-link
+                >
+              </li>
+              <li>
+                <router-link to="/admin/categories"
+                  >Gerenciar Categorias</router-link
+                >
+              </li>
             </ul>
           </div>
 
@@ -210,7 +224,6 @@
           <div class="col-6 col-md-3">
             <h6 class="footer-title">Produto</h6>
             <ul class="footer-links">
-              <li><router-link to="/sobre-nos">Sobre nós</router-link></li>
               <li>
                 <router-link to="/fale-conosco">Fale conosco</router-link>
               </li>
@@ -310,6 +323,7 @@ a:hover {
   color: #fff;
   opacity: 0.8;
 }
+
 :deep(.q-dialog__inner) {
   padding: 0 !important;
 }

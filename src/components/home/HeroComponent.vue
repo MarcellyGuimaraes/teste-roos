@@ -62,4 +62,14 @@ h1.text-h3 {
   line-height: 1.2;
   font-weight: 600;
 }
+
+@media (max-width: 767px) {
+  h1.text-h3 {
+    font-size: 25px;
+  }
+
+  .hero-description[data-v-49453163] {
+    font-size: 15px;
+  }
+}
 </style>
