@@ -181,19 +181,35 @@
               class="logo q-mb-lg"
             />
             <div class="social-links">
-              <a href="#" target="_blank" class="social-link">
+              <a
+                href="https://www.instagram.com/"
+                target="_blank"
+                class="social-link"
+              >
                 <q-icon name="mdi-instagram" />
               </a>
-              <a href="#" target="_blank" class="social-link">
+              <a href="https://x.com/" target="_blank" class="social-link">
                 <q-icon name="mdi-twitter" />
               </a>
-              <a href="#" target="_blank" class="social-link">
+              <a
+                href="https://www.linkedin.com/in/marcellyguimaraes/"
+                target="_blank"
+                class="social-link"
+              >
                 <q-icon name="mdi-linkedin" />
               </a>
-              <a href="#" target="_blank" class="social-link">
+              <a
+                href="https://www.youtube.com/"
+                target="_blank"
+                class="social-link"
+              >
                 <q-icon name="mdi-youtube" />
               </a>
-              <a href="#" target="_blank" class="social-link">
+              <a
+                href="https://wa.link/rzw1q2"
+                target="_blank"
+                class="social-link"
+              >
                 <q-icon name="mdi-whatsapp" />
               </a>
             </div>
