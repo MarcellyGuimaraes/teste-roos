@@ -21,7 +21,12 @@
           class="col-12 col-sm-6 col-md-3"
         >
           <div class="member-card">
-            <q-img :src="member.image" :ratio="1" class="member-image" />
+            <q-img
+              loading="lazy"
+              :src="member.image"
+              :ratio="1"
+              class="member-image"
+            />
             <div class="member-info">
               <h3 class="member-name">{{ member.name }}</h3>
               <p class="member-role">{{ member.title }}</p>

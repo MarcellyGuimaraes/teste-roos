@@ -33,6 +33,7 @@
             >
               <div class="photo-wrapper">
                 <q-img
+                  loading="lazy"
                   :src="`assets/imagens/evento.png`"
                   :ratio="1"
                   class="photo-image"

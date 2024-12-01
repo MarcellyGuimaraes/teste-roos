@@ -4,7 +4,11 @@
     <div class="container">
       <div class="row">
         <div class="col-12">
-          <q-img src="assets/imagens/servicos.png" class="services-image">
+          <q-img
+            loading="lazy"
+            src="assets/imagens/servicos.png"
+            class="services-image"
+          >
             <div class="absolute-full overlay"></div>
             <div class="content-wrapper">
               <h2 class="text-h4 q-mb-lg">

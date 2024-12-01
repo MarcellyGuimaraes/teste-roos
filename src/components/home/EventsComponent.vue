@@ -24,7 +24,7 @@
           :name="event.id"
           class="events-slide"
         >
-          <q-img :src="event.image" class="event-image">
+          <q-img loading="lazy" :src="event.image" class="event-image">
             <div class="image-overlay"></div>
           </q-img>
         </q-carousel-slide>

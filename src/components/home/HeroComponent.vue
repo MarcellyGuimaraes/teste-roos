@@ -2,7 +2,11 @@
   <div class="hero-section q-py-md">
     <div class="container">
       <div class="hero-content rounded-borders">
-        <q-img src="assets/imagens/hero.png" style="height: 600px">
+        <q-img
+          loading="lazy"
+          src="assets/imagens/hero.png"
+          style="height: 600px"
+        >
           <div class="absolute-full bg-black" style="opacity: 0.4"></div>
           <div class="absolute-bottom text-container">
             <h1 class="text-h3 text-white q-mb-md">
