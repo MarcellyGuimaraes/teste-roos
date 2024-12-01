@@ -1,4 +1,3 @@
-<!-- src/pages/BlogPostPage.vue -->
 <template>
   <q-page padding>
     <!-- Loading State -->
@@ -14,147 +13,72 @@
     <template v-else-if="article">
       <!-- Breadcrumb Navigation -->
       <div class="container q-mb-lg">
-        <div class="row items-center text-grey">
-          <q-btn
-            flat
-            dense
-            round
-            icon="chevron_left"
-            color="grey"
-            :to="{ path: '/blog' }"
-            size="sm"
-          />
-          <q-breadcrumbs separator="/">
-            <q-breadcrumbs-el label="Início" :to="{ path: '/' }" />
-            <q-breadcrumbs-el label="Blog" :to="{ path: '/blog' }" />
-            <q-breadcrumbs-el :label="article.title" />
-          </q-breadcrumbs>
+        <div class="row items-center text-grey q-gutter-x-sm">
+          <router-link to="/" class="text-grey">Início</router-link>
+          <span>/</span>
+          <router-link to="/blog" class="text-grey">Blog</router-link>
+          <span>/</span>
+          <span class="text-grey">{{ article.title }}</span>
         </div>
       </div>
 
-      <div class="container">
-        <!-- Category -->
-        <div class="text-caption text-green q-mb-sm">
-          {{ article.categoryDetails?.name || article.category }}
-        </div>
-
-        <!-- Author and Date -->
-        <div class="row items-center q-mb-md">
-          <q-avatar size="40px" class="q-mr-sm">
-            <img :src="'/images/default-avatar.jpg'" alt="Author" />
+      <div class="container article-container">
+        <!-- Author Info -->
+        <div class="row items-center no-wrap q-mb-md">
+          <q-avatar class="q-mr-md">
+            <img src="assets/imagens/default-user.png" alt="Author Avatar" />
           </q-avatar>
           <div>
-            <div class="text-weight-medium">{{ article.author }}</div>
-            <div class="text-grey">
+            <div class="text-weight-bold text-body1">{{ article.author }}</div>
+            <div class="text-grey text-caption">
               {{ formatDate(article.publicationDate) }}
             </div>
           </div>
         </div>
 
         <!-- Article Title -->
-        <h1 class="text-h4 q-mb-lg">{{ article.title }}</h1>
+        <h1 class="text-h4 q-mt-none q-mb-lg">{{ article.title }}</h1>
 
         <!-- Featured Image -->
         <q-img
-          :src="article.imageUrl || '/images/placeholder.jpg'"
-          class="rounded-borders q-mb-lg"
-          style="height: 500px"
-        >
-          <template v-slot:error>
-            <div class="absolute-full flex flex-center bg-grey-3">
-              <q-icon name="image" size="3em" color="grey-7" />
-            </div>
-          </template>
-        </q-img>
+          :src="article.imageUrl"
+          class="q-mb-lg article-image"
+          :ratio="16 / 9"
+        />
 
         <!-- Share Options -->
-        <div class="row items-center q-mb-xl">
-          <div class="text-weight-medium q-mr-md">Compartilhar:</div>
-          <div class="row q-gutter-sm">
-            <q-btn
-              flat
-              round
-              color="grey-8"
-              icon="fab fa-facebook"
-              @click="shareArticle('facebook')"
-            />
-            <q-btn
-              flat
-              round
-              color="grey-8"
-              icon="fab fa-linkedin"
-              @click="shareArticle('linkedin')"
-            />
-            <q-btn
-              flat
-              round
-              color="grey-8"
-              icon="fab fa-whatsapp"
-              @click="shareArticle('whatsapp')"
-            />
-            <q-btn
-              flat
-              round
-              color="grey-8"
-              icon="content_copy"
-              @click="shareArticle('copy')"
-            >
+        <div class="share-section q-mb-xl">
+          <div class="row items-center q-gutter-x-md">
+            <div class="text-body1 text-weight-medium">Compartilhar:</div>
+            <q-btn flat round color="grey-8" icon="mdi-facebook" />
+            <q-btn flat round color="grey-8" icon="mdi-instagram" />
+            <q-btn flat round color="grey-8" icon="mdi-linkedin" />
+            <q-btn flat round color="grey-8" icon="mdi-whatsapp" />
+            <q-btn flat round color="grey-8" icon="content_copy">
               <q-tooltip>Copiar link</q-tooltip>
             </q-btn>
-            <q-btn
-              flat
-              round
-              color="grey-8"
-              icon="email"
-              @click="shareArticle('email')"
-            />
+            <q-btn flat round color="grey-8" icon="email" />
           </div>
         </div>
 
         <!-- Article Content -->
-        <div class="text-body1 q-mb-xl" v-html="article.fullText"></div>
+        <div
+          class="text-body1 article-content q-mb-xl"
+          v-html="article.fullText"
+        ></div>
 
         <!-- Bottom Share Options -->
-        <div class="row items-center q-mb-xl">
-          <div class="text-weight-medium q-mr-md">Compartilhar:</div>
-          <div class="row q-gutter-sm">
-            <q-btn
-              flat
-              round
-              color="grey-8"
-              icon="fab fa-facebook"
-              @click="shareArticle('facebook')"
-            />
-            <q-btn
-              flat
-              round
-              color="grey-8"
-              icon="fab fa-linkedin"
-              @click="shareArticle('linkedin')"
-            />
-            <q-btn
-              flat
-              round
-              color="grey-8"
-              icon="fab fa-whatsapp"
-              @click="shareArticle('whatsapp')"
-            />
-            <q-btn
-              flat
-              round
-              color="grey-8"
-              icon="content_copy"
-              @click="shareArticle('copy')"
-            >
+        <div class="share-section q-mb-xl">
+          <div class="row items-center q-gutter-x-md">
+            <div class="text-body1 text-weight-medium">Compartilhar:</div>
+            <q-btn flat round color="grey-8" icon="mdi-facebook" />
+            <q-btn flat round color="grey-8" icon="mdi-instagram" />
+            <q-btn flat round color="grey-8" icon="mdi-linkedin" />
+            <q-btn flat round color="grey-8" icon="mdi-whatsapp" />
+            <q-btn flat round color="grey-8" icon="content_copy">
               <q-tooltip>Copiar link</q-tooltip>
             </q-btn>
-            <q-btn
-              flat
-              round
-              color="grey-8"
-              icon="email"
-              @click="shareArticle('email')"
-            />
+            <q-btn flat round color="grey-8" icon="email" />
           </div>
         </div>
       </div>
@@ -166,8 +90,7 @@
 import { onMounted } from "vue";
 import { useBlogPost } from "src/composables/useBlogPost";
 
-const { article, loading, error, fetchArticle, formatDate, shareArticle } =
-  useBlogPost();
+const { article, loading, error, fetchArticle, formatDate } = useBlogPost();
 
 onMounted(() => {
   fetchArticle();
@@ -180,18 +103,48 @@ onMounted(() => {
   margin: 0 auto;
 }
 
+.article-container {
+  padding: 0;
+}
+
+.article-image {
+  border-radius: 8px;
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+.q-avatar {
+  font-size: unset;
+  height: 4em;
+  width: 5em;
+}
+
+/* Estilos para o conteúdo do artigo */
+:deep(.article-content) {
+  line-height: 1.8;
+}
+
+:deep(.article-content p) {
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.share-section {
+  padding: 16px 0;
+  border-bottom: 1px solid #eee;
+}
+
 @media (max-width: 767px) {
   .container {
     padding: 0 20px;
   }
-}
 
-/* Estilos para o conteúdo do artigo */
-:deep(.text-body1) {
-  line-height: 1.8;
-}
-
-:deep(.text-body1 p) {
-  margin-bottom: 1.5rem;
+  .text-h4 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
 }
 </style>
