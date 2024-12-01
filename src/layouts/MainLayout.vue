@@ -201,8 +201,10 @@ a:hover {
 }
 
 /* Área administrativa */
-.admin-link {
-  color: #11b80e;
+:deep(
+    a.q-item.q-item-type.row.no-wrap.q-item--clickable.q-link.cursor-pointer.q-focusable.q-hoverable
+  ) {
+  color: #000000;
 }
 
 /* Responsive Styles */
