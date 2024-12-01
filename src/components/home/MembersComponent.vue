@@ -1,4 +1,3 @@
-<!-- src/components/home/MembersSection.vue -->
 <template>
   <section class="members-section bg-dark text-white q-py-xl">
     <div class="container">
@@ -14,45 +13,30 @@
         </router-link>
       </div>
 
-      <!-- Members Carousel -->
-      <q-carousel
-        v-model="slide"
-        animated
-        arrows
-        navigation
-        infinite
-        :autoplay="5000"
-        swipeable
-      >
-        <q-carousel-slide :name="1">
-          <div class="row q-col-gutter-xl">
-            <div
-              v-for="member in displayedMembers"
-              :key="member.name"
-              class="col-12 col-sm-6 col-md-3"
-            >
-              <div class="member-card">
-                <q-img :src="member.image" :ratio="1" class="member-image" />
-                <div class="member-info">
-                  <h3 class="member-name">{{ member.name }}</h3>
-                  <p class="member-role">{{ member.title }}</p>
-                  <div class="divider"></div>
-                  <p class="member-description">{{ member.description }}</p>
-                </div>
-              </div>
+      <!-- Members Grid -->
+      <div class="row q-col-gutter-xl">
+        <div
+          v-for="member in members"
+          :key="member.name"
+          class="col-12 col-sm-6 col-md-3"
+        >
+          <div class="member-card">
+            <q-img :src="member.image" :ratio="1" class="member-image" />
+            <div class="member-info">
+              <h3 class="member-name">{{ member.name }}</h3>
+              <p class="member-role">{{ member.title }}</p>
+              <div class="divider"></div>
+              <p class="member-description">{{ member.description }}</p>
             </div>
           </div>
-        </q-carousel-slide>
-      </q-carousel>
+        </div>
+      </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
 import OsidiIcon from "../shared/OsidiIcon.vue";
-
-const slide = ref(1);
 
 const members = [
   {
@@ -83,9 +67,6 @@ const members = [
     image: "assets/imagens/membros/membro-4.png",
   },
 ];
-
-// Pode adicionar mais membros aqui e eles serão distribuídos em slides adicionais
-const displayedMembers = computed(() => members);
 </script>
 
 <style scoped>
@@ -124,42 +105,6 @@ const displayedMembers = computed(() => members);
 
 .visit-blog .q-icon {
   font-size: 20px;
-}
-
-:deep(.q-carousel) {
-  background: transparent;
-  height: auto;
-}
-
-:deep(.q-carousel__navigation) {
-  bottom: -40px;
-}
-
-:deep(.q-carousel__navigation-icon--active),
-:deep(.q-carousel__navigation-icon--inactive) {
-  color: #11b80e !important;
-}
-
-:deep(.q-carousel__navigation-icon--inactive) {
-  opacity: 0.5;
-}
-
-:deep(.q-carousel__arrow) {
-  color: #d3d3d3;
-  background: rgb(255 255 255 / 80%);
-  font-size: 24px;
-  margin: 0;
-  width: 40px;
-  top: 115px;
-  height: 40px;
-}
-
-:deep(.q-carousel__arrow--left) {
-  left: -50px;
-}
-
-:deep(.q-carousel__arrow--right) {
-  right: -50px;
 }
 
 .member-card {
@@ -207,16 +152,6 @@ const displayedMembers = computed(() => members);
   margin: 0;
   max-width: 250px;
   margin: 0 auto;
-}
-
-@media (max-width: 1279px) {
-  :deep(.q-carousel__arrow--left) {
-    left: 0;
-  }
-
-  :deep(.q-carousel__arrow--right) {
-    right: 0;
-  }
 }
 
 @media (max-width: 599px) {

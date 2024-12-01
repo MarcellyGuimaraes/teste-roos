@@ -16,13 +16,8 @@
       <q-carousel
         v-model="currentSlide"
         animated
-        arrows
-        navigation
         swipeable
         infinite
-        :autoplay="autoplay"
-        @mouseenter="autoplay = false"
-        @mouseleave="autoplay = 3000"
         class="photos-carousel"
       >
         <q-carousel-slide
