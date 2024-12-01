@@ -1,7 +1,8 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar class="justify-evenly">
+      <!-- Desktop Header -->
+      <q-toolbar class="desktop-toolbar justify-evenly">
         <q-tabs class="q-mr-xl">
           <router-link to="/">
             <img
@@ -20,7 +21,6 @@
             <q-tab label="Blog" />
           </router-link>
 
-          <!-- Menu Admin -->
           <q-btn-dropdown flat label="Admin" v-if="isAdmin">
             <q-list>
               <q-item clickable v-close-popup to="/articles/new">
@@ -46,7 +46,119 @@
 
         <DonationButton unelevated />
       </q-toolbar>
+
+      <!-- Mobile Header -->
+      <q-toolbar class="mobile-toolbar">
+        <div class="full-width">
+          <div class="row items-center justify-between">
+            <router-link to="/">
+              <img
+                src="assets/imagens/logo.png"
+                alt="OSIDI Logo"
+                class="mobile-logo"
+              />
+            </router-link>
+
+            <q-btn
+              flat
+              dense
+              round
+              icon="menu"
+              aria-label="Menu"
+              @click="mobileMenuOpen = true"
+            />
+          </div>
+        </div>
+      </q-toolbar>
     </q-header>
+
+    <!-- Mobile Menu Dialog -->
+    <q-dialog v-model="mobileMenuOpen" position="right" full-height>
+      <q-card class="mobile-menu-card">
+        <q-toolbar class="mobile-menu-header">
+          <div class="row full-width items-center justify-between">
+            <router-link to="/" @click="mobileMenuOpen = false">
+              <img
+                src="assets/imagens/logo.png"
+                alt="OSIDI Logo"
+                class="mobile-menu-logo"
+              />
+            </router-link>
+            <q-btn
+              flat
+              round
+              dense
+              icon="close"
+              v-close-popup
+              class="mobile-menu-close"
+            />
+          </div>
+        </q-toolbar>
+
+        <q-scroll-area class="mobile-menu-content">
+          <q-list padding>
+            <q-item clickable v-ripple to="/" @click="mobileMenuOpen = false">
+              <q-item-section>Home</q-item-section>
+            </q-item>
+
+            <q-item
+              clickable
+              v-ripple
+              to="/blog"
+              @click="mobileMenuOpen = false"
+            >
+              <q-item-section>Blog</q-item-section>
+            </q-item>
+
+            <q-expansion-item
+              v-if="isAdmin"
+              label="Admin"
+              header-class="admin-expansion-header"
+            >
+              <q-list class="admin-submenu">
+                <q-item
+                  clickable
+                  v-ripple
+                  to="/articles/new"
+                  @click="mobileMenuOpen = false"
+                >
+                  <q-item-section>Novo Artigo</q-item-section>
+                </q-item>
+                <q-item
+                  clickable
+                  v-ripple
+                  to="/categories/new"
+                  @click="mobileMenuOpen = false"
+                >
+                  <q-item-section>Nova Categoria</q-item-section>
+                </q-item>
+                <q-item
+                  clickable
+                  v-ripple
+                  to="/admin/articles"
+                  @click="mobileMenuOpen = false"
+                >
+                  <q-item-section>Gerenciar Artigos</q-item-section>
+                </q-item>
+                <q-item
+                  clickable
+                  v-ripple
+                  to="/admin/categories"
+                  @click="mobileMenuOpen = false"
+                >
+                  <q-item-section>Gerenciar Categorias</q-item-section>
+                </q-item>
+              </q-list>
+            </q-expansion-item>
+
+            <!-- Donation Button -->
+            <div class="q-pa-md">
+              <DonationButton unelevated class="full-width" />
+            </div>
+          </q-list>
+        </q-scroll-area>
+      </q-card>
+    </q-dialog>
 
     <q-page-container>
       <router-view />
@@ -82,7 +194,7 @@
           </div>
 
           <!-- Mapa do Site -->
-          <div class="col-12 col-md-3">
+          <div class="col-6 col-md-3">
             <h6 class="footer-title">Mapa do site</h6>
             <ul class="footer-links">
               <li><router-link to="/sobre-nos">Sobre nós</router-link></li>
@@ -95,7 +207,7 @@
           </div>
 
           <!-- Produto -->
-          <div class="col-12 col-md-3">
+          <div class="col-6 col-md-3">
             <h6 class="footer-title">Produto</h6>
             <ul class="footer-links">
               <li><router-link to="/sobre-nos">Sobre nós</router-link></li>
@@ -136,7 +248,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { useRoute } from "vue-router";
 import DonationButton from "../components/shared/DonationButton.vue";
 
@@ -144,10 +256,9 @@ defineOptions({
   name: "MainLayout",
 });
 
-// Simula verificação de admin - você deve implementar sua própria lógica de autenticação
 const isAdmin = ref(true);
-
 const route = useRoute();
+const mobileMenuOpen = ref(false);
 </script>
 
 <style scoped>
@@ -199,16 +310,88 @@ a:hover {
   color: #fff;
   opacity: 0.8;
 }
+:deep(.q-dialog__inner) {
+  padding: 0 !important;
+}
 
+/* Estilos do Menu Mobile */
+.mobile-menu-card {
+  width: 100%;
+  max-width: 300px;
+  height: 100vh;
+  background-color: #374835;
+}
+
+.mobile-menu-header {
+  background-color: #374835;
+  min-height: 64px;
+  padding: 0 16px;
+}
+
+.mobile-menu-logo {
+  height: 32px;
+}
+
+.mobile-menu-close {
+  color: white;
+}
+
+.mobile-menu-content {
+  height: calc(100vh - 64px);
+}
+
+.mobile-menu-content :deep(.q-item) {
+  color: white;
+  min-height: 48px;
+  font-size: 16px;
+}
+
+.mobile-menu-content :deep(.q-expansion-item__content) {
+  background-color: #2a2a2a;
+}
+
+.admin-expansion-header {
+  color: white;
+}
+
+.admin-submenu :deep(.q-item) {
+  padding-left: 32px;
+  color: #999;
+}
 /* Área administrativa */
-:deep(
-    a.q-item.q-item-type.row.no-wrap.q-item--clickable.q-link.cursor-pointer.q-focusable.q-hoverable
-  ) {
+:deep(a.q-item.q-item-type) {
   color: #000000;
 }
 
-/* Responsive Styles */
 @media (max-width: 767px) {
+  .desktop-toolbar {
+    display: none;
+  }
+
+  .q-toolbar {
+    height: 90px;
+    align-content: center;
+  }
+
+  .mobile-toolbar {
+    display: block;
+    min-height: 64px;
+    padding: 0 16px;
+  }
+
+  .mobile-logo {
+    height: 32px;
+  }
+  .donation-button {
+    font-size: 12px;
+  }
+
+  .donation-button :deep(.q-icon) {
+    display: none;
+  }
+  :deep(a.q-item.q-item-type) {
+    color: #ffffff;
+  }
   .row.justify-between {
     text-align: center;
   }
@@ -219,6 +402,17 @@ a:hover {
 
   .col-12:last-child {
     margin-bottom: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-toolbar {
+    display: none;
+  }
+
+  .desktop-toolbar {
+    display: flex;
+    height: 100px;
   }
 }
 
