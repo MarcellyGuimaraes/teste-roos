@@ -41,18 +41,6 @@
               Todas as categorias
             </div>
             <div
-              class="category-item"
-              :class="{ active: activeCategory?.name === 'Categoria X' }"
-              @click="
-                () => {
-                  activeCategory = { name: 'Categoria X' };
-                  currentPage = 1;
-                }
-              "
-            >
-              Categoria X
-            </div>
-            <div
               v-for="category in categories"
               :key="category.id"
               class="category-item"
@@ -73,7 +61,7 @@
         <div class="col-12 col-md-9">
           <!-- Current Category Title -->
           <div class="q-mb-lg">
-            <h5 class="text-h6 q-my-none">
+            <h5 class="category-title text-h6 q-my-none">
               {{ activeCategory ? activeCategory.name : "Todas as categorias" }}
             </h5>
           </div>
@@ -200,6 +188,10 @@ onMounted(async () => {
   cursor: pointer;
   border-radius: 4px;
   margin-bottom: 2px;
+}
+
+.category-title {
+  color: #11b80e;
 }
 
 .category-item.active {
